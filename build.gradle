@@ -16,7 +16,9 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 
-//        classpath 'com.novoda:bintray-release:0.7.0'
+        //上传项目到jcenter依赖
+        //下面对应gradle4.1及以上，4.1以下用 classpath 'com.novoda:bintray-release:0.3.4'
+        classpath 'com.novoda:bintray-release:0.8.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

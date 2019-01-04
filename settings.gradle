@@ -1,1 +1,1 @@
-include ':app', ':yatnet'
+include ':app', ':yatnet', ':updatejclib'
