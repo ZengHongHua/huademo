@@ -1,15 +1,18 @@
 apply plugin: 'com.android.library'
 
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+version = '1.0.5'
+
 android {
     compileSdkVersion 28
-
-
 
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.4"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -36,4 +39,88 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.12.0'
     api 'com.squareup.retrofit2:retrofit:2.5.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }
+
+//------------------上传到jCenter-----------------------------\\
+def siteUrl = 'https://github.com/ZengHongHua' // 项目的主页 这个是说明，可随便填
+def gitUrl = 'https://github.com/ZengHongHua' // Git仓库的url 这个是说明，可随便填
+group = "com.example.hua.normalusedemo" // 这里是groupId ,必须填写 一般填你唯一的包名，对应com.squareup.okhttp3:okhttp:3.4.1中的com.squareup.okhttp3部分
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                // Add your description here
+                name 'NomalNetUse' //项目描述
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'The CommonUtil Software License, Version 1.0.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'netuse' //填写开发者的一些基本信息
+                        name 'zenghonghua' //填写开发者的一些基本信息
+                        email 'zenghonghuacloud@foxmail.com' //填写开发者的一些基本信息
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+// 加载本地配置
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//这个是和你bintray上面创建的package(项目)是对应的
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "huamaven"  //发布到Bintray的那个仓库里，默认账户有四个库，我们这里上传到maven库
+        name = "normaluse"  //需更改，这个名字就是你在Bintray上创建Package的名字，这里会查询，如果此包不存在就会创建一个。
+        //userOrg = 'zenghonghua'    //组织名称 organization
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+//------------------上传到jCenter---------end--------------------\\

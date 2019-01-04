@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.NetUseActivity" />
+        <activity android:name=".ui.DanZiActivity" />
     </application>
 
 </manifest>

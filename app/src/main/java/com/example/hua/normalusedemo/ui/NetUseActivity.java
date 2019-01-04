@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.hua.normalusedemo.R;
 import com.example.hua.normalusedemo.base.BaseActivity;
 import com.example.hua.yatnet.net.NetListener;
@@ -29,12 +31,14 @@ import retrofit2.Response;
 public class NetUseActivity extends BaseActivity {
 
     private Button mBtn;
+    private ImageView mIvThumb;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_net_use);
         mBtn = findViewById(R.id.use_btn);
+        mIvThumb = findViewById(R.id.use_iv_thumb);
 
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +46,10 @@ public class NetUseActivity extends BaseActivity {
                 getData();
             }
         });
+
+        Glide.with(this)
+                .load(R.mipmap.ic_launcher)
+                .into(mIvThumb);
     }
 
     private void getData() {

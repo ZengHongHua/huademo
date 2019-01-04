@@ -18,7 +18,7 @@ import retrofit2.http.Query;
  */
 public interface ApiService {
 
-    //发现模块数据
+    //
     @GET("V7/music_modules")
     Call<ResponseBody> getFindData(
             @Query("sskey") String sskey,
@@ -30,6 +30,12 @@ public interface ApiService {
     //@Headers("Content-Type: application/json")
     @POST("mock/11/upgrade/")
     Call<ResponseBody> upgrade(
+            @HeaderMap Map<String, String> map,
+            @Body RequestBody requestBody
+    );
+
+    @POST("mock/11/upgrad2223333/")
+    Call<ResponseBody> testUpgrade3333(
             @HeaderMap Map<String, String> map,
             @Body RequestBody requestBody
     );

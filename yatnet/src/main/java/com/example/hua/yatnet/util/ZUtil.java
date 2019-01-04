@@ -21,4 +21,7 @@ public class ZUtil {
         return m.find();
     }
 
+    public static String getStringS() {
+        return "45458";
+    }
 }
